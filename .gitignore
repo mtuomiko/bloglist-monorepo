@@ -1,0 +1,6 @@
+node_modules/
+.env
+
+# cypress folders except integration
+/cypress/
+!/cypress/integration/

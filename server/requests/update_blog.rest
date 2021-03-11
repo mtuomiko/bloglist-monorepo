@@ -1,0 +1,9 @@
+put http://localhost:3003/api/blogs/5d9a59c0c41ca52ea48d816e
+Content-Type: application/json
+
+{
+    "title": "Kolmas Blogi",
+    "author": "Teemu the Third",
+    "url": "http://www.kolmoset.com",
+    "likes": 5
+}
