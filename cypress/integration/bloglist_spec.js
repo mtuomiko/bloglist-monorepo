@@ -21,8 +21,8 @@ describe('Blog app', function () {
 
   it('Login fail', function () {
     cy.get('[data-cy=login-username]').type('user')
-    cy.get('[data-cy=login-password]').type('notpass')
-    cy.get('[data-cy=login-button]').click( { force: true })
+    cy.get('[data-cy=login-password]').type('notpass{enter}')
+    //cy.get('[data-cy=login-button]').click( { force: true })
 
     cy.wait('@loginUser')
 
@@ -33,8 +33,8 @@ describe('Blog app', function () {
   describe('Logged in', function () {
     beforeEach(function () {
       cy.get('[data-cy=login-username]').type('tiinatest')
-      cy.get('[data-cy=login-password]').type('pass')
-      cy.get('[data-cy=login-button]').click( { force: true })
+      cy.get('[data-cy=login-password]').type('pass{enter}')
+      //cy.get('[data-cy=login-button]').click( { force: true })
 
       cy.wait('@loginUser')
     })
