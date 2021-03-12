@@ -1,5 +1,4 @@
 import React from 'react'
-//import { render, fireEvent } from '@testing-library/react'
 import { render } from '../testUtils'
 import { ConnectedBlog as Blog } from './Blog'
 
@@ -16,8 +15,8 @@ describe('Blog component', () => {
       username: 'philphil',
     },
     comments: [
-      "Changed my life",
-      "Been there, done that",
+      'Changed my life',
+      'Been there, done that',
     ],
   }
 

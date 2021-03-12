@@ -1,28 +1,29 @@
 module.exports = {
-  "env": {
-    "es6": true,
-    "browser": true,
-    "jest/globals": true,
-    "node": true
+  'env': {
+    'es6': true,
+    'browser': true,
+    'jest/globals': true,
+    'node': true,
+    'commonjs': true,
   },
-  "globals": {
-    "BACKEND_URL": true
+  'globals': {
+    'BACKEND_URL': true,
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended',
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  'parserOptions': {
+    'ecmaFeatures': {
+      'jsx': true,
     },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    'ecmaVersion': 2018,
+    'sourceType': 'module',
   },
-  "plugins": [
-    "react", "jest",
+  'plugins': [
+    'react', 'jest',
   ],
-  "rules": {
-    "react/prop-types": 0
+  'rules': {
+    'react/prop-types': 0,
   }
 }
