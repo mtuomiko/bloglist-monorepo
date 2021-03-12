@@ -12,7 +12,8 @@
     "test": "jest",
     "test:client": "jest --projects client",
     "test:server": "jest --projects server",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run --spec 'cypress/integration/login_spec.js'",
+    "cypress": "cypress open"
   },
   "repository": {
     "type": "git",
