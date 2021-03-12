@@ -22,5 +22,12 @@ module.exports = (on, config) => {
 
   config.env.APP_PORT = process.env.PORT || 3000
 
+  on('task', {
+    log(message) {
+      console.log(message)
+      return null
+    }
+  })
+
   return config
 }
