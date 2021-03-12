@@ -51,6 +51,12 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   app.use(express.static(DIST_PATH))
 }
 
+if (process.env.NODE_ENV === 'production') {
+  app.get('/health', (req, res) => {
+    res.send('ok')
+  })
+}
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
