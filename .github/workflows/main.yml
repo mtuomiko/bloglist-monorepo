@@ -43,6 +43,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "morning-dusk-24998"
           heroku_email: "mtuomikoski@gmail.com"
-          healthcheck: "https://thawing-ocean-77154.herokuapp.com/health"
+          healthcheck: "https://morning-dusk-24998.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
