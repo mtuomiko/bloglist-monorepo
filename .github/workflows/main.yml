@@ -17,6 +17,7 @@ jobs:
     env:
       SECRET: ${{ secrets.SECRET }}
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -46,3 +47,37 @@ jobs:
           healthcheck: "https://morning-dusk-24998.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: Workflow failure Slack notification
+        if: ${{ failure() }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: 'Workflow failure'
+          fields: repo,message,commit,author,took
+      - name: Deployment successful Slack notification
+        if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: repo,commit,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `A new version of ${process.env.AS_REPO} deployed to https://thawing-ocean-77154.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} and it only took ${process.env.AS_TOOK}.`
+              }]
+            }
+  tag_version:
+    needs: deployment_pipeline
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.35.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INITIAL_VERSION: "0.0.1"
+          DEFAULT_BUMP: "patch"
