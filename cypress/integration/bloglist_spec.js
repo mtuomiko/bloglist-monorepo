@@ -5,7 +5,7 @@ describe('Blog app', function () {
   beforeEach(function () {
     cy.intercept('POST', '/api/login').as('loginUser')
     cy.intercept('GET', '/api/blogs').as('getBlogs')
-    cy.intercept('GET', 'api/users').as('getUsers')
+    cy.intercept('GET', '/api/users').as('getUsers')
 
     cy.request('POST', `${baseUrl}/api/testing/reset`)
     const user = {
