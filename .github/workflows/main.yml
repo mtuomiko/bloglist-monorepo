@@ -64,7 +64,7 @@ jobs:
             {
               attachments: [{
                 color: 'good',
-                text: `A new version of ${process.env.AS_REPO} deployed to https://thawing-ocean-77154.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} and it only took ${process.env.AS_TOOK}.`
+                text: `A new version of ${process.env.AS_REPO} deployed to https://morning-dusk-24998.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} and it only took ${process.env.AS_TOOK}.`
               }]
             }
   tag_version:
