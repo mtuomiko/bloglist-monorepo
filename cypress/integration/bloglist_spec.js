@@ -3,10 +3,6 @@ const baseUrl = `http://localhost:${appPort}`
 
 describe('Blog app', function () {
   beforeEach(function () {
-    cy.intercept('POST', '/api/login').as('loginUser')
-    cy.intercept('GET', '/api/blogs').as('getBlogs')
-    cy.intercept('GET', '/api/users').as('getUsers')
-
     cy.request('POST', `${baseUrl}/api/testing/reset`)
     const user = {
       username: 'tiinatest',
@@ -15,8 +11,6 @@ describe('Blog app', function () {
     }
     cy.request('POST', `${baseUrl}/api/users`, user)
     cy.visit(baseUrl)
-    cy.wait('@getBlogs')
-    cy.wait('@getUsers')
   })
 
   it('Front page can be opened', function () {
@@ -25,10 +19,8 @@ describe('Blog app', function () {
 
   it('Login fail', function () {
     cy.get('[data-cy=login-username]').type('user')
-    cy.get('[data-cy=login-password]').type('notpass{enter}')
-    //cy.get('[data-cy=login-button]').click( { force: true })
-
-    cy.wait('@loginUser')
+    cy.get('[data-cy=login-password]').type('notpass')
+    cy.get('[data-cy=login-button]').click()
 
     cy.contains('Login failure')
     cy.contains('logged in').should('not.exist')
@@ -37,10 +29,8 @@ describe('Blog app', function () {
   describe('Logged in', function () {
     beforeEach(function () {
       cy.get('[data-cy=login-username]').type('tiinatest')
-      cy.get('[data-cy=login-password]').type('pass{enter}')
-      //cy.get('[data-cy=login-button]').click( { force: true })
-
-      cy.wait('@loginUser')
+      cy.get('[data-cy=login-password]').type('pass')
+      cy.get('[data-cy=login-button]').click()
     })
 
     it('Name of the user is shown', function () {
@@ -57,7 +47,6 @@ describe('Blog app', function () {
       cy.contains('Logout').click()
       cy.contains('Logged out as tiinatest')
       cy.contains('Tiina Testeri logged in').should('not.exist')
-
     })
 
     it('Add blog, like, comment and remove', function () {

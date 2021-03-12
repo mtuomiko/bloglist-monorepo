@@ -1,14 +1,9 @@
 const path = require('path')
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = (env, argv) => {
-  // Production url not yet implemented, both urls here as a placeholder
-  const backend_url = argv.mode === 'production'
-    ? 'http://localhost:3003/api'
-    : 'http://localhost:3003/api'
-
   return {
+    target: argv.mode === 'development' ? 'web' : 'browserslist',
     entry: ['./client/index.js'],
     output: {
       path: path.resolve(__dirname, 'build'),
@@ -21,6 +16,7 @@ const config = (env, argv) => {
       proxy: {
         '/api': 'http://localhost:3003',
       },
+      hot: true,
     },
     devtool: 'source-map',
     module: {
@@ -30,17 +26,11 @@ const config = (env, argv) => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
-            // options: {
-            //   presets: ['@babel/preset-env', '@babel/preset-react']
-            // },
           },
         },
       ],
     },
     plugins: [
-      new webpack.DefinePlugin({
-        BACKEND_URL: JSON.stringify(backend_url),
-      }),
       new HtmlWebpackPlugin({
         title: 'Bloglist app',
         template: 'client/assets/template.html',

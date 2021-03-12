@@ -1,6 +1,11 @@
 require('dotenv').config()
 
-const PORT = process.env.PORT || 3000
+let PORT = process.env.PORT || 3000
+
+if (process.env.NODE_ENV === 'development') {
+  PORT = 3003
+}
+
 let MONGODB_URI = process.env.MONGODB_URI
 
 if (process.env.NODE_ENV === 'test') {
