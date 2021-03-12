@@ -18,18 +18,22 @@ describe('Blog app', function () {
   })
 
   it('Login fail', function () {
+    cy.intercept('POST', '/api/login').as('loginUser')
     cy.get('[data-cy=login-username]').type('user')
     cy.get('[data-cy=login-password]').type('notpass')
     cy.get('[data-cy=login-button]').click()
+    cy.wait('@loginUser')
     cy.contains('Login failure')
     cy.contains('logged in').should('not.exist')
   })
 
   describe('Logged in', function () {
     beforeEach(function () {
+      cy.intercept('POST', '/api/login').as('loginUser')
       cy.get('[data-cy=login-username]').type('tiinatest')
       cy.get('[data-cy=login-password]').type('pass')
       cy.get('[data-cy=login-button]').click()
+      cy.wait('@loginUser')
     })
 
     it('Name of the user is shown', function () {
