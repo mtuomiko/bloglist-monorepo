@@ -12,6 +12,6 @@ jobs:
       - name: Check deployed app
         uses: jtalk/url-health-check-action@v1.5
         with:
-          url: https://morning-dusk-24998.herokuapp.com
+          url: https://morning-dusk-24998.herokuapp.com/health
           max-attempts: 5
-          retry-delay: 10s
+          retry-delay: 15s
