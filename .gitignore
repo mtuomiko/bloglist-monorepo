@@ -2,6 +2,5 @@ node_modules/
 .env
 
 # cypress folders except integration and plugins
-/cypress/*
-!/cypress/integration
-!/cypress/plugins
+/cypress/screenshots
+/cypress/videos
