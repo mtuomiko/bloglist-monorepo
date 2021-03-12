@@ -24,12 +24,6 @@ jobs:
           node-version: '14'
       - name: npm install
         run: npm install
-      - name: lint
-        run: npm run lint
-      - name: build
-        run: npm run build
-      - name: test
-        run: npm run test
       - name: e2e tests
         uses: cypress-io/github-action@v2
         with:
