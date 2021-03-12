@@ -39,7 +39,8 @@ it('Login request', function () {
   //   cy.log(response)
   // })
   cy.wait('@loginUser').then((interception) => {
-    cy.log(interception.response.body)
+    cy.log('logging interception')
+    cy.log(interception)
   })
 })
 
