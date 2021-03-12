@@ -24,7 +24,7 @@ const LoginForm = (props) => {
   return (
     <Row className="mt-3">
       <Col>
-        <h3>Blog app login</h3>
+        <h3>Blog app login <small className="text-muted">Use credentials</small></h3>
         <Form onSubmit={handleLogin}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
