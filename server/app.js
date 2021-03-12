@@ -8,6 +8,7 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const morgan = require('morgan')
+const path = require('path')
 
 const app = express()
 
@@ -44,6 +45,10 @@ app.use('/api/login', loginRouter)
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
+}
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+  const DIST_PATH = path.resolve(__dirname, '../build')
+  app.use(express.static(DIST_PATH))
 }
 
 app.use(middleware.unknownEndpoint)

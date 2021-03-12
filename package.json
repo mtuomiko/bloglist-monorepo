@@ -6,12 +6,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node server/index.js",
     "start:test": "cross-env NODE_ENV=test node server/index.js",
-    "serve": "webpack serve --mode=development",
+    "start:dev": "webpack serve --mode=development",
     "build": "webpack --mode=production",
     "lint": "eslint .",
     "test": "jest",
-    "test:client": "jest --verbose --projects client",
-    "test:server": "jest --verbose --projects server",
+    "test:client": "jest --projects client",
+    "test:server": "jest --projects server",
     "test:e2e": "cypress run"
   },
   "repository": {
