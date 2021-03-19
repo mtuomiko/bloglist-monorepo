@@ -1,8 +1,10 @@
 # Full Stack Open bloglist app
 
+Part 11 Pokedex repository found at [full-stack-open-pokedex](https://github.com/mtuomiko/full-stack-open-pokedex).
+
 Monorepository for [Full Stack Open](https://fullstackopen.com/) course [exercise 11.21](https://fullstackopen.com/en/part11/expanding_further#exercises-11-20-11-22).
 
-Part 11 Pokedex repository found at [full-stack-open-pokedex](https://github.com/mtuomiko/full-stack-open-pokedex).
+App served by Heroku at <https://morning-dusk-24998.herokuapp.com/>. Note that free Heroku dynos (containers) might take some time to start.
 
 ## Environment variables
 
@@ -38,3 +40,9 @@ The app uses three environment variables that need to be defined in `.env` file 
 `npm run test:e2e` run `cypress` tests without GUI (assumes front- and backend are running in `test` environment)
 
 `npm run cypress` runs `cypress` with GUI using `cypress open`
+
+## Based on
+
+Original [frontend](https://github.com/mtuomiko/full-stack-open/tree/master/part7/bloglist-frontend) and [backend](https://github.com/mtuomiko/full-stack-open/tree/master/part7/bloglist-backend)
+
+The app structure borrows from <https://github.com/fullstack-hy2020/create-app> and <https://github.com/UniversityOfHelsinkiCS/toskaboiler>
