@@ -8,7 +8,7 @@ App served by Heroku at <https://morning-dusk-24998.herokuapp.com/>. Note that f
 
 ## Environment variables
 
-The app uses three environment variables that need to be defined in `.env` file or some other way. The file `.env.example` contains the variable names.
+The Node backend of the app uses three environment variables that need to be defined in `.env` file or some other way. The file `.env.example` contains the variable names.
 
 `MONGODB_URI` which contains the URI for the MongoDB production database.
 `TEST_MONGODB_URI` which contains the URI for the MongoDB test database.
