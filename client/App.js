@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Redirect,
 } from 'react-router-dom'

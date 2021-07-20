@@ -4,3 +4,5 @@ node_modules/
 # cypress folders except integration and plugins
 /cypress/screenshots
 /cypress/videos
+
+/build/
