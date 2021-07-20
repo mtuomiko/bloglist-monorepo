@@ -7,7 +7,8 @@ const config = (env, argv) => {
     entry: ['./client/index.js'],
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: 'main.js'
+      filename: 'main.js',
+      publicPath: '/'
     },
     devServer: {
       contentBase: path.resolve(__dirname, 'build'),
