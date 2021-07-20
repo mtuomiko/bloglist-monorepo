@@ -47,26 +47,6 @@ jobs:
           healthcheck: "https://morning-dusk-24998.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
-      - name: Workflow failure Slack notification
-        if: ${{ failure() }}
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          author_name: 'Workflow failure'
-          fields: repo,message,commit,author,took
-      - name: Deployment successful Slack notification
-        if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          fields: repo,commit,author,took
-          custom_payload: |
-            {
-              attachments: [{
-                color: 'good',
-                text: `A new version of ${process.env.AS_REPO} deployed to https://morning-dusk-24998.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} and it only took ${process.env.AS_TOOK}.`
-              }]
-            }
   tag_version:
     needs: deployment_pipeline
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
