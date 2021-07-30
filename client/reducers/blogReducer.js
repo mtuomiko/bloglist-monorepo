@@ -52,7 +52,6 @@ export const likeBlog = (blog) => {
       })
       dispatch(showNotification(`Liked ${blog.title}`))
     } catch (exception) {
-      //dispatch(showNotification(`Error updating ${blog.title}: ${exception.response.data.error}`, 'error'))
       dispatch(showNotification(`Error updating ${blog.title}: ${exception}`, 'error'))
     }
   }
@@ -96,7 +95,6 @@ export const removeBlog = (blog) => {
       })
       dispatch(showNotification(`Removed ${blog.title}`))
     } catch (exception) {
-      //dispatch(showNotification(`Error removing ${blog.title}: ${exception.response.data.error}`, 'error'))
       dispatch(showNotification(`Error removing ${blog.title}: ${exception}`, 'error'))
     }
   }

@@ -30,7 +30,6 @@ export const login = (username, password) => {
       }
       const user = await loginService.login(credentials)
       window.localStorage.setItem('loggedBloglistUser', JSON.stringify(user))
-      // blogService.setToken(user.token)
       dispatch(showNotification(`Logged in as ${user.username}`))
       dispatch({
         type: 'LOGIN',
@@ -48,7 +47,6 @@ export const login = (username, password) => {
 export const logout = () => {
   return (dispatch, getState) => {
     window.localStorage.removeItem('loggedBloglistUser')
-    // blogService.setToken(null)
     dispatch(showNotification(`Logged out as ${getState().user.username}`))
     dispatch({
       type: 'LOGOUT',
@@ -71,7 +69,6 @@ export const checkLogin = () => {
       })
       return
     }
-    // blogService.setToken(user.token)
     dispatch({
       type: 'SET_USER',
       user
