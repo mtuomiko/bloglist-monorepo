@@ -1,6 +1,4 @@
-import axios from 'axios'
-// const baseHost = BACKEND_URL
-// const baseUrl = `${baseHost}/login`
+import axios from './axiosConfig'
 const baseUrl = '/api/login'
 
 const login = async (credentials) => {

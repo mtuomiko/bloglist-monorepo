@@ -8,7 +8,8 @@ import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
   notification: notificationReducer,
-  blogs: blogReducer,
+  // hack to prevent jest errors since axiosConfig uses this store directly, not through Provider
+  blogs: blogReducer || null,
   user: loginReducer,
   users: userReducer,
 })

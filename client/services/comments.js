@@ -1,6 +1,4 @@
-import axios from 'axios'
-// const baseHost = BACKEND_URL
-// const baseUrl = `${baseHost}/blogs`
+import axios from './axiosConfig'
 const baseUrl = '/api/blogs'
 
 const create = async (id, comment) => {

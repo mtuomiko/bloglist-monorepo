@@ -20,10 +20,11 @@ loginRouter.post('/', async (request, response) => {
   const userForToken = {
     username: user.username,
     id: user._id,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
   }
 
   const token = jwt.sign(userForToken, process.env.SECRET)
-
+  console.log(jwt.decode(token))
   response
     .status(200)
     .send({ token, username: user.username, name: user.name, id: user._id })

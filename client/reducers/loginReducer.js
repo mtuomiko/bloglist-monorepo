@@ -1,5 +1,5 @@
+import jwt_decode from 'jwt-decode'
 import loginService from '../services/login'
-import blogService from '../services/blogs'
 import { showNotification } from './notificationReducer'
 
 const loginReducer = (state = null, action) => {
@@ -30,7 +30,7 @@ export const login = (username, password) => {
       }
       const user = await loginService.login(credentials)
       window.localStorage.setItem('loggedBloglistUser', JSON.stringify(user))
-      blogService.setToken(user.token)
+      // blogService.setToken(user.token)
       dispatch(showNotification(`Logged in as ${user.username}`))
       dispatch({
         type: 'LOGIN',
@@ -48,7 +48,7 @@ export const login = (username, password) => {
 export const logout = () => {
   return (dispatch, getState) => {
     window.localStorage.removeItem('loggedBloglistUser')
-    blogService.setToken(null)
+    // blogService.setToken(null)
     dispatch(showNotification(`Logged out as ${getState().user.username}`))
     dispatch({
       type: 'LOGOUT',
@@ -59,14 +59,23 @@ export const logout = () => {
 export const checkLogin = () => {
   return dispatch => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      blogService.setToken(user.token)
-      dispatch({
-        type: 'SET_USER',
-        user
-      })
+    if (!loggedUserJSON) {
+      return
     }
+
+    const user = JSON.parse(loggedUserJSON)
+    const decodedToken = jwt_decode(user.token)
+    if (decodedToken.exp <= Math.floor(Date.now() / 1000)) {
+      dispatch({
+        type: 'LOGOUT',
+      })
+      return
+    }
+    // blogService.setToken(user.token)
+    dispatch({
+      type: 'SET_USER',
+      user
+    })
   }
 }
 
