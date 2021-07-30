@@ -182,6 +182,7 @@ describe('Update blog', () => {
 
     const response = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
+      .set('Authorization', `bearer ${testUser.token}`)
       .send(blog)
       .expect(200)
 
@@ -202,6 +203,7 @@ describe('Update blog', () => {
 
     await api
       .put(`/api/blogs/${blogToUpdate.id}`)
+      .set('Authorization', `bearer ${testUser.token}`)
       .send(blog)
       .expect(200)
 

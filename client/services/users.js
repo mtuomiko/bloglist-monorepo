@@ -1,6 +1,4 @@
-import axios from 'axios'
-// const baseHost = BACKEND_URL
-// const baseUrl = `${baseHost}/users`
+import axios from './axiosConfig'
 const baseUrl = '/api/users'
 
 const getAll = async () => {

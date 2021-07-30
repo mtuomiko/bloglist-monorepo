@@ -13,7 +13,7 @@ const config = (env, argv) => {
     devServer: {
       contentBase: path.resolve(__dirname, 'build'),
       compress: true,
-      port: 3000,
+      port: process.env.PORT || 3000,
       proxy: {
         '/api': 'http://localhost:3003',
       },
