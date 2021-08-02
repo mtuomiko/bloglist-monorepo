@@ -5,11 +5,10 @@ import { likeBlog, removeBlog } from '../reducers/blogReducer'
 import { withRouter } from 'react-router-dom'
 import { Button, Table, Card } from 'react-bootstrap'
 
-const Blog = (props) => {
-  if (props.blog === undefined) {
+const Blog = ({ blog, user: { username }, likeBlog, removeBlog, history }) => {
+  if (blog === undefined) {
     return null
   }
-  const { blog, user, likeBlog, removeBlog, history } = props
 
   const like = () => {
     likeBlog(blog)
@@ -38,7 +37,7 @@ const Blog = (props) => {
             {blog.likes} likes
             <Button data-cy="blog-like-button" className="btn-sm ml-1" onClick={like}>Like</Button>
           </div>
-          {user.username === blog.user.username &&
+          {username === blog.user.username &&
             <div>
               <Button className="btn-sm mt-2" onClick={remove}>Remove blog</Button>
             </div>
