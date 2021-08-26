@@ -2,5 +2,6 @@ module.exports = {
   globals: {
     'BACKEND_URL': true
   },
-  setupFilesAfterEnv: ['./setupTests.js']
+  setupFilesAfterEnv: ['./setupTests.js'],
+  testEnvironment: 'jsdom',
 }

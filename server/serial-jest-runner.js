@@ -1,6 +1,6 @@
-const DefaultJestRunner = require('jest-runner')
+import JestRunner from 'jest-runner'
 
-class SerialJestRunner extends DefaultJestRunner {
+class SerialJestRunner extends JestRunner {
   constructor(...args) {
     super(...args)
     this.isSerial = true
