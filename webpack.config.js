@@ -11,13 +11,14 @@ const config = (env, argv) => {
       publicPath: '/'
     },
     devServer: {
-      contentBase: path.resolve(__dirname, 'build'),
+      static: path.resolve(__dirname, 'build'),
       compress: true,
       port: process.env.PORT || 3000,
       proxy: {
         '/api': 'http://localhost:3003',
       },
       hot: true,
+      historyApiFallback: true,
     },
     devtool: 'source-map',
     module: {
