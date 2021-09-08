@@ -41,7 +41,7 @@ async function main() {
     const DIST_PATH = path.resolve(__dirname, '../build')
     app.use(express.static(DIST_PATH))
     app.get('*', (request, response) => {
-      response.sendFile('index.html', { root: path.resolve(__dirname, '../build') })
+      response.sendFile('index.html', { root: DIST_PATH })
     })
   }
 
