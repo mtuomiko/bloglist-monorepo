@@ -16,30 +16,18 @@ The Node backend of the app uses three environment variables that need to be def
 
 ## Usage
 
-`npm install` to install dependencies.
-
-
-`npm run start` starts the app in production. `express` serves the frontend content from `build/`
-
-`npm run start:test` starts the app in `test` environment which uses the test database
-
-`npm run start:dev-client` starts only the React frontend in development mode with `webpack`
-
-`npm run start:dev-server` starts only the Express backend in development mode with `nodemon`
-
-`npm run build` builds using `webpack` into `build/`
-
-`npm run lint` run linting
-
-`npm run test` run tests on whole project
-
-`npm run test:client` run frontend tests
-
-`npm run test:server` run backend tests
-
-`npm run test:e2e` run `cypress` tests without GUI (assumes front- and backend are running in `test` environment)
-
-`npm run cypress` runs `cypress` with GUI using `cypress open`
+* `npm install` to install dependencies.
+* `npm run start` starts the app in production. `express` serves the frontend content from `build/`
+* `npm run start:test` starts the app in `test` environment which uses the test database
+* `npm run start:dev-client` starts only the React frontend in development mode with `webpack`
+* `npm run start:dev-server` starts only the Express backend in development mode with `nodemon`
+* `npm run build` builds using `webpack` into `build/`
+* `npm run lint` run linting
+* `npm run test` run tests on whole project
+* `npm run test:client` run frontend tests
+* `npm run test:server` run backend tests
+* `npm run test:e2e` run `cypress` tests without GUI (assumes front- and backend are running in `test` environment)
+* `npm run cypress` runs `cypress` with GUI using `cypress open` (assumes front- and backend are running in `test` environment)
 
 ## Based on
 
