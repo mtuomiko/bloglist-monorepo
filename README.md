@@ -18,7 +18,7 @@ The Node backend of the app uses three environment variables that need to be def
 
 * `npm install` to install dependencies.
 * `npm run start` starts the app in production. `express` serves the frontend content from `build/`
-* `npm run start:test` starts the app in `test` environment which uses the test database
+* `npm run start:test` starts the app in `test` environment which uses the test database (remember to build first)
 * `npm run start:dev-client` starts only the React frontend in development mode with `webpack`
 * `npm run start:dev-server` starts only the Express backend in development mode with `nodemon`
 * `npm run build` builds using `webpack` into `build/`
