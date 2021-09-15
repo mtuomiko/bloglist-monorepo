@@ -52,12 +52,16 @@ blogsRouter.delete('/:id', middleware.tokenVerifier, async (request, response, n
     const token = request.verifiedToken
     const blog = await Blog.findById(request.params.id)
 
+    if (!blog) {
+      return response.status(404).json({ error: 'blog not found' })
+    }
+
     if (blog.user.toString() === token.id.toString()) {
       await Blog.findByIdAndRemove(request.params.id)
       return response.status(204).end()
-    } else {
-      return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
     }
+
+    return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
   } catch (exception) {
     next(exception)
   }
@@ -66,31 +70,34 @@ blogsRouter.delete('/:id', middleware.tokenVerifier, async (request, response, n
 blogsRouter.put('/:id', middleware.tokenVerifier, async (request, response, next) => {
   const body = request.body
 
-  if (!body.likes || (!body.title && !body.url)) {
-    response.status(400).end()
-  } else {
-    const blog = {
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes,
+  if (!body.likes) {
+    return response.status(400).json({ error: 'likes missing' })
+  }
+
+  if (!body.title && !body.url) {
+    return response.status(400).json({ error: 'both blog title and url missing' })
+  }
+
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+  }
+
+  try {
+    // Populate response so it's similar to response of get all blogs function
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      request.params.id, blog, { new: true }
+    ).populate('user', { username: 1, name: 1 })
+
+    if (updatedBlog) {
+      return response.json(updatedBlog.toJSON())
     }
 
-    try {
-      // Populate response so it's similar to response of get all blogs function
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        request.params.id, blog, { new: true }
-      ).populate('user', { username: 1, name: 1 })
-
-      if (updatedBlog) {
-        response.json(updatedBlog.toJSON())
-      } else {
-        response.status(404).end()
-      }
-    } catch (exception) {
-      next(exception)
-    }
-
+    response.status(404).json({ error: 'blog not found' })
+  } catch (exception) {
+    next(exception)
   }
 })
 
@@ -98,14 +105,16 @@ blogsRouter.post('/:id/comments', middleware.tokenVerifier, async (request, resp
   const body = request.body
 
   if (!body.comment) {
-    return response.status(401).json({ error: 'comment missing' })
+    return response.status(400).json({ error: 'comment missing' })
   }
 
   try {
-    await Blog.findByIdAndUpdate(
-      request.params.id,
-      { $push: { comments: body.comment } }
-    )
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id,
+      { $push: { comments: body.comment } })
+    if (!updatedBlog) {
+      return response.status(404).json({ error: 'blog not found' })
+    }
+
     response.status(201).end()
   } catch (exception) {
     next(exception)
