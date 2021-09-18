@@ -9,7 +9,7 @@ usersRouter.get('', async (request, response) => {
   response.json(users.map(user => user.toJSON()))
 })
 
-usersRouter.post('', async (request, response, next) => {
+usersRouter.post('', async (request, response) => {
   const body = request.body
   if (!body.password || body.password.length < 3) {
     return response.status(400).json({ error: 'password invalid, must be at least 3 chars long' })
@@ -24,13 +24,8 @@ usersRouter.post('', async (request, response, next) => {
     passwordHash,
   })
 
-  try {
-    const savedUser = await user.save()
-    response.status(201).json(savedUser)
-  }
-  catch (exception) {
-    next(exception)
-  }
+  const savedUser = await user.save()
+  response.status(201).json(savedUser)
 })
 
 module.exports = usersRouter
