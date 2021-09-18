@@ -10,64 +10,56 @@ blogsRouter.get('', async (request, response) => {
   response.json(blogs.map(blog => blog.toJSON()))
 })
 
-blogsRouter.post('', middleware.tokenVerifier, async (request, response, next) => {
-  try {
-    const token = request.verifiedToken
-    const blog = new Blog(request.body)
+blogsRouter.post('', middleware.tokenVerifier, async (request, response) => {
+  const token = request.verifiedToken
+  const blog = new Blog(request.body)
 
-    if (!blog.likes) {
-      blog.likes = 0
-    }
-
-    if (!blog.title && !blog.url) {
-      response.status(400).json({ error: 'both blog title and url missing' })
-      return
-    }
-
-    const user = await User.findById(token.id)
-    blog.user = user._id
-
-    const savedBlog = await blog.save()
-
-    user.blogs = user.blogs.concat(savedBlog._id)
-    await user.save()
-
-    // Populate user info (manually) to blog before responding
-    const jsonBlog = savedBlog.toJSON()
-
-    jsonBlog.user = {
-      id: user._id,
-      name: user.name,
-      username: user.username,
-    }
-
-    response.status(201).json(jsonBlog)
-  } catch (exception) {
-    next(exception)
+  if (!blog.likes) {
+    blog.likes = 0
   }
+
+  if (!blog.title && !blog.url) {
+    response.status(400).json({ error: 'both blog title and url missing' })
+    return
+  }
+
+  const user = await User.findById(token.id)
+  blog.user = user._id
+
+  const savedBlog = await blog.save()
+
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
+
+  // Populate user info (manually) to blog before responding
+  const jsonBlog = savedBlog.toJSON()
+
+  jsonBlog.user = {
+    id: user._id,
+    name: user.name,
+    username: user.username,
+  }
+
+  response.status(201).json(jsonBlog)
 })
 
-blogsRouter.delete('/:id', middleware.tokenVerifier, async (request, response, next) => {
-  try {
-    const token = request.verifiedToken
-    const blog = await Blog.findById(request.params.id)
+blogsRouter.delete('/:id', middleware.tokenVerifier, async (request, response) => {
+  const token = request.verifiedToken
+  const blog = await Blog.findById(request.params.id)
 
-    if (!blog) {
-      return response.status(404).json({ error: 'blog not found' })
-    }
-
-    if (blog.user.toString() === token.id.toString()) {
-      await Blog.findByIdAndRemove(request.params.id)
-      return response.status(204).end()
-    }
-
-    return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
-  } catch (exception) {
-    next(exception)
+  if (!blog) {
+    return response.status(404).json({ error: 'blog not found' })
   }
+
+  if (blog.user.toString() === token.id.toString()) {
+    await Blog.findByIdAndRemove(request.params.id)
+    return response.status(204).end()
+  }
+
+  return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
 })
 
-blogsRouter.put('/:id', middleware.tokenVerifier, async (request, response, next) => {
+blogsRouter.put('/:id', middleware.tokenVerifier, async (request, response) => {
   const body = request.body
 
   if (!body.likes) {
@@ -85,40 +77,32 @@ blogsRouter.put('/:id', middleware.tokenVerifier, async (request, response, next
     likes: body.likes,
   }
 
-  try {
-    // Populate response so it's similar to response of get all blogs function
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      request.params.id, blog, { new: true }
-    ).populate('user', { username: 1, name: 1 })
+  // Populate response so it's similar to response of get all blogs function
+  const updatedBlog = await Blog.findByIdAndUpdate(
+    request.params.id, blog, { new: true }
+  ).populate('user', { username: 1, name: 1 })
 
-    if (updatedBlog) {
-      return response.json(updatedBlog.toJSON())
-    }
-
-    response.status(404).json({ error: 'blog not found' })
-  } catch (exception) {
-    next(exception)
+  if (updatedBlog) {
+    return response.json(updatedBlog.toJSON())
   }
+
+  response.status(404).json({ error: 'blog not found' })
 })
 
-blogsRouter.post('/:id/comments', middleware.tokenVerifier, async (request, response, next) => {
+blogsRouter.post('/:id/comments', middleware.tokenVerifier, async (request, response) => {
   const body = request.body
 
   if (!body.comment) {
     return response.status(400).json({ error: 'comment missing' })
   }
 
-  try {
-    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id,
-      { $push: { comments: body.comment } })
-    if (!updatedBlog) {
-      return response.status(404).json({ error: 'blog not found' })
-    }
-
-    response.status(201).end()
-  } catch (exception) {
-    next(exception)
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id,
+    { $push: { comments: body.comment } })
+  if (!updatedBlog) {
+    return response.status(404).json({ error: 'blog not found' })
   }
+
+  response.status(201).end()
 })
 
 module.exports = blogsRouter
