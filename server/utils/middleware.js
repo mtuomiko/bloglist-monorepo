@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-
+const morgan = require('morgan')
 const logger = require('./logger')
 
 const requestLogger = (request, response, next) => {
@@ -54,10 +54,19 @@ const tokenVerifier = (request, response, next) => {
   next()
 }
 
+morgan.token('request-body', (req) => JSON.stringify(req.body))
+const morganLogger = morgan(':date :method :url :status :res[content-length] - :response-time ms :request-body')
+
+const morganMiddleware = (request, response, next) => {
+  morganLogger(request, response, () => { })
+  next()
+}
+
 module.exports = {
   requestLogger,
   tokenExtractor,
   unknownEndpoint,
   errorHandler,
   tokenVerifier,
+  morganMiddleware,
 }

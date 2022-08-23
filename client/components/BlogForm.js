@@ -6,7 +6,7 @@ import { useField } from '../hooks'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 
 const BlogForm = (props) => {
-  const { createBlog } = props
+  const { createBlog, toggleVisibility } = props
   const title = useField('text')
   const author = useField('text')
   const url = useField('text')
@@ -25,6 +25,7 @@ const BlogForm = (props) => {
     title.reset()
     author.reset()
     url.reset()
+    toggleVisibility()
   }
 
   return (

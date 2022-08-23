@@ -167,6 +167,33 @@ describe('DELETE blog', () => {
     const blogIds = blogsAtEnd.map(blog => blog.id)
     expect(blogIds).not.toContain(idToDelete)
   })
+
+  test('User of blog doesn\'t have reference to blog after blog deletion', async () => {
+    const newBlog = {
+      title: 'DeleteTestBlog',
+      author: 'Testeri Teemu',
+      url: 'http://teemunb.log/main.html',
+    }
+    const blogResponse = await api
+      .post('/api/blogs')
+      .set('Authorization', `bearer ${testUser.token}`)
+      .send(newBlog)
+    const blog = blogResponse.body
+
+    const usersAtStart = await helper.usersInDb()
+    expect(usersAtStart[0].blogs.filter(elem => elem.toString() === blog.id)).toHaveLength(1)
+
+    await api
+      .delete(`/api/blogs/${blog.id}`)
+      .set('Authorization', `bearer ${testUser.token}`)
+      .expect(204)
+
+    const blogsIdsAtEnd = (await helper.blogsInDb()).map(elem => elem.id)
+    const usersAtEnd = await helper.usersInDb()
+
+    expect(blogsIdsAtEnd).not.toContain(blog.id)
+    expect(usersAtEnd[0].blogs.filter(elem => elem.toString() === blog.id)).toHaveLength(0)
+  })
 })
 
 describe('Update blog', () => {

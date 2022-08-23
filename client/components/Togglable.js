@@ -21,7 +21,9 @@ const Togglable = (props) => {
         <Button onClick={toggleVisibility}>{buttonLabel}</Button>
       </div>
       <div style={showWhenVisible}>
-        {children}
+        {React.Children.map(children, child => {
+          return typeof child.type === 'string' ? child : React.cloneElement(child, { toggleVisibility })
+        })}
         <Button className="mt-1" onClick={toggleVisibility}>{hideTextLabel}</Button>
       </div>
     </div>

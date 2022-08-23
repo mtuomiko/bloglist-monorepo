@@ -46,17 +46,24 @@ blogsRouter.post('', middleware.tokenVerifier, async (request, response) => {
 blogsRouter.delete('/:id', middleware.tokenVerifier, async (request, response) => {
   const token = request.verifiedToken
   const blog = await Blog.findById(request.params.id)
-
   if (!blog) {
     return response.status(404).json({ error: 'blog not found' })
   }
+  if (blog.user.toString() !== token.id.toString()) {
+    return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
+  }
+  const user = await User.findById(token.id)
+  const blogArrayIndex = user.blogs.findIndex(elem => elem.equals(blog._id))
 
-  if (blog.user.toString() === token.id.toString()) {
-    await Blog.findByIdAndRemove(request.params.id)
-    return response.status(204).end()
+  await Blog.findByIdAndRemove(request.params.id)
+
+  // if user blog array has a reference to the blog to be deleted, remove it
+  if (blogArrayIndex !== -1) {
+    user.blogs.splice(blogArrayIndex, 1)
+    await user.save()
   }
 
-  return response.status(401).json({ error: 'unauthorized to delete blogs by other users' })
+  return response.status(204).end()
 })
 
 blogsRouter.put('/:id', middleware.tokenVerifier, async (request, response) => {
