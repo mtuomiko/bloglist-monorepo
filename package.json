@@ -14,7 +14,7 @@
     "test:client": "jest --projects client",
     "test:server": "jest --projects server",
     "test:e2e": "cypress run --headless",
-    "cypress": "cypress open"
+    "cypress": "cypress open --e2e"
   },
   "repository": {
     "type": "git",
@@ -58,7 +58,7 @@
     "core-js": "^3.16.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "cypress": "^8.3.0",
+    "cypress": "^10.6.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-cypress": "^2.11.3",
