@@ -4,7 +4,7 @@ Part 11 Pokedex repository found at [full-stack-open-pokedex](https://github.com
 
 Monorepository for [Full Stack Open](https://fullstackopen.com/) course [exercise 11.21](https://fullstackopen.com/en/part11/expanding_further#exercises-11-20-11-22).
 
-App served by Heroku at <https://morning-dusk-24998.herokuapp.com/>. Note that free Heroku dynos (containers) might take some time to start.
+Application used to be hosted on Heroku free dynos under a generated app name `morning-dusk-24998`. Currently not hosted anywhere.
 
 ## Environment variables
 
